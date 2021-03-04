@@ -145,35 +145,13 @@ export class Snippet extends React.Component {
     const err = error || rendererError;
     // display code if blocks rendering failed
     const precode = loading || !rendererReady || err || !uri ? code : undefined;
-    return React.createElement(
-      "div",
-      null,
-      loading || rendering
-        ? React.createElement(
-            "div",
-            { className: "ui active inverted dimmer" },
-            React.createElement("div", { className: "ui loader" })
-          )
-        : undefined,
-      precode
-        ? React.createElement(
-            "pre",
-            null,
-            React.createElement("code", null, precode)
-          )
-        : undefined,
-      err
-        ? React.createElement("div", { className: "ui message info" }, err)
-        : undefined,
-      uri
-        ? React.createElement("img", {
-            className: "ui image",
-            alt: code,
-            src: uri,
-            width: width,
-            height: height,
-          })
-        : undefined
+    return (
+      <div>
+        {loading || rendering ? <div className="ui active inverted dimmer"> <div className="ui loader"> </div> </div> : undefined}
+        {precode ? <pre> <code> {precode} </code> </pre> : undefined}
+        {err ? <div className="ui message info"> {err} </div> : undefined}
+        {uri ? <img className="ui image" alt={code} src={uri} width={width} height={height}/> : undefined}
+      </div>
     );
   }
 }
