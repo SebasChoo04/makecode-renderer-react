@@ -1,12 +1,13 @@
 import './App.css';
-import { Snippet } from './Renderer';
+import { Snippet } from './Renderer-Class';
+import SnippetHooks from './Renderer-Hooks';
 import React, { useState, useEffect} from 'react';
 
 function App() {
 
   const [code, setCode] = useState('')
 
-  useEffect(() => { 
+  useEffect(() => {
     setCode([
       `basic.forever(function () {
       if (sonar.ping(
@@ -33,11 +34,10 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Snippet code={code[0]} packageId="_54gXiFU3h2bL" />
-        <Snippet code={code[1]} packageId="_54gXiFU3h2bL"/>
-        <Snippet code={code[2]} packageId="_54gXiFU3h2bL"/>
-        <Snippet code={code[3]} packageId="_54gXiFU3h2bL"/>
-
+        <SnippetHooks code={code[0]} packageId="_54gXiFU3h2bL" />
+        <SnippetHooks code={code[1]} packageId="_54gXiFU3h2bL"/>
+        <SnippetHooks code={code[2]} packageId="_54gXiFU3h2bL"/>
+        <SnippetHooks code={code[3]} packageId="_54gXiFU3h2bL"/>
       </header>
     </div>
   );

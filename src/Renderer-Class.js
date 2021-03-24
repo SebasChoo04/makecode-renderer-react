@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 // update url with target editor
 export let makecodeUrl = "https://makecode.microbit.org/";
 // force language if needed
@@ -8,6 +8,7 @@ let rendererReady = false;
 let rendererError = "";
 let nextRequest = 0;
 const pendingRequests = {};
+
 function renderBlocks(req, cb) {
   req.id = nextRequest++ + "";
   pendingRequests[req.id] = { req, cb };
