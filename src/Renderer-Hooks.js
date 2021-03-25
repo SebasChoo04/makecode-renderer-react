@@ -57,7 +57,7 @@ function startRenderer() {
   f.src = `${makecodeUrl}--docs?render=1${lang ? `&lang=${lang}` : ""}`;
   document.body.appendChild(f);
   // check if connection failed
-  setTimeout(function () {
+  setTimeout(() => {
     if (!rendererReady)
       rendererError =
         "Oops, can't connect to MakeCode. Please check your internet connection.";
@@ -74,6 +74,12 @@ export default function Snippet( props ) {
   const [height, setHeight] = useState();
   const [error, setError] = useState();
   const [rendering, setRendering] = useState(false);
+
+  const loading = !rendererReady;
+  // is there any error?
+  const err = error || rendererError;
+  // display code if blocks rendering failed
+  const precode = loading || !rendererReady || err || !uri ? code : undefined;
 
   function renderProps() {
     // clear state and render again
@@ -114,13 +120,10 @@ export default function Snippet( props ) {
 
     return (
       <div>
-        {/* Waiting for frame to start */}
-        {!rendererReady || rendering ? <div className="ui active inverted dimmer"> <div className="ui loader"> </div> </div> : undefined}
-        {/* Is there any error? */}
-        {(error || rendererError) ? <div className="ui message info"> {error || rendererError} </div> : undefined}
-        {/* Display code if blocks rendering fails */}
-        {(!rendererReady || (error || rendererError) || !uri ? code : undefined) ? <pre> <code> {(!rendererReady || !rendererReady || (error || rendererError) || !uri ? code : undefined)} </code> </pre> : undefined}
-        {uri ? <img className="ui image" alt={code} src={uri} width={width} height={height} /> : undefined}
+        {loading || rendering ? <div className="ui active inverted dimmer"> <div className="ui loader"> </div> </div> : undefined}
+        {precode ? <pre> <code> {precode} </code> </pre> : undefined}
+        {err ? <div className="ui message info"> {err} </div> : undefined}
+        {uri ? <img className="ui image" alt={code} src={uri} width={width} height={height}/> : undefined}
       </div>
     );
 }
